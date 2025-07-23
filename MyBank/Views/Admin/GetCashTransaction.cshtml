@@ -1,0 +1,26 @@
+﻿@model MyBank.Models.Entity.CashTransactions
+@{
+    ViewBag.Title = "GetCashTransaction";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditCashTransaction", "Admin", FormMethod.Post))
+{
+    <div style="margin-top:15px" class="form-group">
+        @Html.HiddenFor(c => c.ID)
+        <label style="margin-top:15px">Customers ID</label>
+        @Html.DropDownListFor(c => c.CusID, (List<SelectListItem>)ViewBag.dgr1, new { @class = "form-control" })
+        <label style="margin-top:15px">Consultant ID</label>
+        @Html.DropDownListFor(c => c.ConsID, (List<SelectListItem>)ViewBag.dgr2, new { @class = "form-control" })
+        <label style="margin-top:15px"> Amount of Transaction</label>
+        @Html.TextBoxFor(c => c.Amount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Amount, "", new { @style = "color:red" })
+        <label style="margin-top:15px">Transacted Currency</label>
+        @Html.TextBoxFor(c => c.Currency, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Currency, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:30px">
+        <button class="btn-info" id="Btn1">Edit Cash Transaction</button>
+</div>
+}
+

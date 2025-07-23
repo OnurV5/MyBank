@@ -1,0 +1,59 @@
+﻿@model MyBank.Models.Entity.Customer
+@{
+    ViewBag.Title = "AddNewCustomer";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<form class="form-group" method="post">
+    <div style="margin-top:15px"></div>
+    <div>
+        <label>Customers First Name</label>
+        <input type="text" class="form-control" name="FName" />
+        @Html.ValidationMessageFor(x => x.FName, "", new { @style = "color:red" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Last Name</label>
+        <input type="text" class="form-control" name="LName" />
+        @Html.ValidationMessageFor(x => x.LName, "", new { @style = "color:red" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Country</label>
+        <input type="text" class="form-control" name="FromCountry" />
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Email</label>
+        <input type="text" class="form-control" name="Email" />
+        @Html.ValidationMessageFor(x => x.Email, "", new { @style = "color:red" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Phone</label>
+        <input type="text" class="form-control" name="Phone" />
+        @Html.ValidationMessageFor(x => x.Phone, "", new { @style = "color:red" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Consultant</label>
+        @Html.DropDownListFor(c => c.ConsltID, (List<SelectListItem>)ViewBag.dgr1, new { @class = "form-control" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Cash</label>
+        @Html.TextBoxFor(c => c.Deposit.Cash, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Deposit.Cash, "", new { @style = "color:red" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <label>Customers Preferred Currency</label>
+        @Html.TextBoxFor(c => c.Deposit.Currency, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Deposit.Currency, "", new { @style = "color:red" })
+        <br />
+    </div>
+    <div style="margin-top:15px">
+        <button class="btn-info" id="Btn1">Add New Customer</button>
+    </div>
+</form>
+

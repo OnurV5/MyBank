@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29b82a2374934a088d8d0a4ddfad6ff8" Name="Diagram1" ZoomLevel="40">
+        <EntityTypeShape EntityType="MyBankDBModel.Administrator" Width="1.5" PointX="0.875" PointY="7.25" />
+        <EntityTypeShape EntityType="MyBankDBModel.CashTransactions" Width="1.5" PointX="8.375" PointY="15.75" />
+        <EntityTypeShape EntityType="MyBankDBModel.Consultant" Width="1.5" PointX="0.875" PointY="12.125" />
+        <EntityTypeShape EntityType="MyBankDBModel.Cryptos" Width="1.5" PointX="3.125" PointY="15.125" />
+        <EntityTypeShape EntityType="MyBankDBModel.CryptoTransactions" Width="1.5" PointX="5.375" PointY="15.625" />
+        <EntityTypeShape EntityType="MyBankDBModel.Customer" Width="1.5" PointX="3.125" PointY="18.75" />
+        <EntityTypeShape EntityType="MyBankDBModel.Deposit" Width="1.5" PointX="5.375" PointY="19.5" />
+        <EntityTypeShape EntityType="MyBankDBModel.OwnedCryptos" Width="1.5" PointX="5.375" PointY="22.375" />
+        <EntityTypeShape EntityType="MyBankDBModel.sysdiagrams" Width="1.5" PointX="9.625" PointY="20.75" />
+        <AssociationConnector Association="MyBankDBModel.FK__CashTrans__ConsI__04659998" />
+        <AssociationConnector Association="MyBankDBModel.FK__CashTrans__CusID__0371755F" />
+        <AssociationConnector Association="MyBankDBModel.FK__CryptoTra__ConsI__08362A7C" />
+        <AssociationConnector Association="MyBankDBModel.FK__Customer__Conslt__76177A41" />
+        <AssociationConnector Association="MyBankDBModel.FK__CryptoTra__Crypt__092A4EB5" />
+        <AssociationConnector Association="MyBankDBModel.FK_Crypto" />
+        <AssociationConnector Association="MyBankDBModel.FK__CryptoTra__CusID__07420643" />
+        <AssociationConnector Association="MyBankDBModel.Deposit_FK_CusID" />
+        <AssociationConnector Association="MyBankDBModel.FK_Cus" />
+        <EntityTypeShape EntityType="MyBankDBModel.AdminLOG" Width="1.5" PointX="0.875" PointY="5" />
+        <AssociationConnector Association="MyBankDBModel.FK__AdminLOG__AdminI__1431ED0D" />
+        <EntityTypeShape EntityType="MyBankDBModel.ConsultantLOG" Width="1.5" PointX="0.875" PointY="10" />
+        <AssociationConnector Association="MyBankDBModel.FK__Consultan__Consu__3592E0D8" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

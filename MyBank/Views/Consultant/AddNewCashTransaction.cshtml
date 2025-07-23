@@ -1,0 +1,35 @@
+﻿@model MyBank.Models.Entity.CashTransactions
+@{
+    ViewBag.Title = "AddNewCashTransaction";
+    Layout = "~/Views/Shared/ConsultantLayout.cshtml";
+}
+
+<form class="form-group" method="post">
+    <div style="margin-top:15px"></div>
+    <div>
+        <label>Customer</label>
+        @Html.DropDownListFor(c => c.CusID, (List<SelectListItem>)ViewBag.dgr1, new { @class = "form-control" })
+    </div>
+    <div style="margin-top:15px">
+        <label>True if Withdrawl, False if Deposit</label>
+        <input type="text" class="form-control" name="Deposit_or_Withdrawl" />
+        @Html.ValidationMessageFor(x => x.Deposit_Withdraw, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Transacted Amount</label>
+        <input type="text" class="form-control" name="Amount" />
+        @Html.ValidationMessageFor(x => x.Amount, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Transacted Currency</label>
+        <input type="text" class="form-control" name="Currency" />
+        @Html.ValidationMessageFor(x => x.Currency, "", new { @style = "color:red" })
+    </div>
+
+
+
+    <div style="margin-top:15px">
+        <button class="btn-info" id="Btn1">Add New Cash Transaction</button>
+    </div>
+</form>
+

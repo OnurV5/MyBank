@@ -1,0 +1,45 @@
+﻿@model MyBank.Models.Entity.Consultant
+@{
+    ViewBag.Title = "AddNewConsultant";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<form class="form-group" method="post">
+    <div style="margin-top:15px"></div>
+    <div>
+        <label>Consultants First Name</label>
+        <input type="text" class="form-control" name="Fname" />
+        @Html.ValidationMessageFor(x => x.Fname, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Consultants Last Name</label>
+        <input type="text" class="form-control" name="LName" />
+        @Html.ValidationMessageFor(x => x.LName, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Consultants Country</label>
+        <input type="text" class="form-control" name="FromCountry" />
+    </div>
+    <div style="margin-top:15px">
+        <label>Consultants Email</label>
+        <input type="text" class="form-control" name="Email" />
+        @Html.ValidationMessageFor(x => x.Email, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Consultants Phone</label>
+        <input type="text" class="form-control" name="Phone" />
+        @Html.ValidationMessageFor(x => x.Phone, "", new { @style = "color:red" })
+    </div>
+    <div style="margin-top:15px">
+        <label>Consultants Password</label>
+        <input type="password" class="form-control" name="Pwrd" />
+        @Html.ValidationMessageFor(x => x.Pwrd, "", new { @style = "color:red" })
+    </div>
+
+
+
+    <div style="margin-top:15px">
+        <button class="btn-info" id="Btn1">Add New Consultant</button>
+    </div>
+</form>
+

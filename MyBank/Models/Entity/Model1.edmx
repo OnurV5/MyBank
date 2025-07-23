@@ -1,0 +1,890 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyBankDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="30" />
+          <Property Name="LName" Type="nvarchar" MaxLength="30" />
+          <Property Name="FromCountry" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="bigint" />
+          <Property Name="Email" Type="char" MaxLength="100" />
+          <Property Name="Pwrd" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdminLOG">
+          <Key>
+            <PropertyRef Name="LOGID" />
+          </Key>
+          <Property Name="LOGID" Type="int" Nullable="false" />
+          <Property Name="AdminID" Type="int" />
+          <Property Name="Operation" Type="text" />
+        </EntityType>
+        <EntityType Name="CashTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CusID" Type="int" />
+          <Property Name="ConsID" Type="int" />
+          <Property Name="Deposit_Withdraw" Type="bit" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Currency" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Consultant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Fname" Type="nvarchar" MaxLength="30" />
+          <Property Name="LName" Type="nvarchar" MaxLength="30" />
+          <Property Name="FromCountry" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="char" MaxLength="100" />
+          <Property Name="Phone" Type="bigint" />
+          <Property Name="Pwrd" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConsultantLOG">
+          <Key>
+            <PropertyRef Name="LOGID" />
+          </Key>
+          <Property Name="LOGID" Type="int" Nullable="false" />
+          <Property Name="ConsultantID" Type="int" />
+          <Property Name="Operation" Type="text" />
+        </EntityType>
+        <EntityType Name="Cryptos">
+          <Key>
+            <PropertyRef Name="Acronym" />
+          </Key>
+          <Property Name="Acronym" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="15" />
+          <Property Name="Value_" Type="int" />
+        </EntityType>
+        <EntityType Name="CryptoTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CusID" Type="int" />
+          <Property Name="ConsID" Type="int" />
+          <Property Name="Buy_Sell" Type="bit" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="CryptoAcr" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="30" />
+          <Property Name="LName" Type="nvarchar" MaxLength="30" />
+          <Property Name="FromCountry" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="char" MaxLength="100" />
+          <Property Name="Phone" Type="bigint" />
+          <Property Name="ConsltID" Type="int" />
+        </EntityType>
+        <EntityType Name="Deposit">
+          <Key>
+            <PropertyRef Name="CusID" />
+          </Key>
+          <Property Name="CusID" Type="int" Nullable="false" />
+          <Property Name="Cash" Type="money" />
+          <Property Name="Currency" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="OwnedCryptos">
+          <Key>
+            <PropertyRef Name="CryptoAcr" />
+            <PropertyRef Name="CusID" />
+          </Key>
+          <Property Name="CryptoAcr" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="CusID" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="Deposit_FK_CusID">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Deposit" Type="Self.Deposit" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Deposit">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdminLOG__AdminI__32B6742D">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AdminLOG" Type="Self.AdminLOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AdminLOG">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CashTrans__ConsI__2B155265">
+          <End Role="Consultant" Type="Self.Consultant" Multiplicity="0..1" />
+          <End Role="CashTransactions" Type="Self.CashTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashTransactions">
+              <PropertyRef Name="ConsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CashTrans__CusID__2A212E2C">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CashTransactions" Type="Self.CashTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashTransactions">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultan__Consu__3592E0D8">
+          <End Role="Consultant" Type="Self.Consultant" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConsultantLOG" Type="Self.ConsultantLOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ConsultantLOG">
+              <PropertyRef Name="ConsultantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CryptoTra__ConsI__2EE5E349">
+          <End Role="Consultant" Type="Self.Consultant" Multiplicity="0..1" />
+          <End Role="CryptoTransactions" Type="Self.CryptoTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CryptoTransactions">
+              <PropertyRef Name="ConsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CryptoTra__Crypt__2FDA0782">
+          <End Role="Cryptos" Type="Self.Cryptos" Multiplicity="0..1" />
+          <End Role="CryptoTransactions" Type="Self.CryptoTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cryptos">
+              <PropertyRef Name="Acronym" />
+            </Principal>
+            <Dependent Role="CryptoTransactions">
+              <PropertyRef Name="CryptoAcr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CryptoTra__CusID__2DF1BF10">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CryptoTransactions" Type="Self.CryptoTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CryptoTransactions">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__Conslt__1CC7330E">
+          <End Role="Consultant" Type="Self.Consultant" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="ConsltID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Crypto">
+          <End Role="Cryptos" Type="Self.Cryptos" Multiplicity="1" />
+          <End Role="OwnedCryptos" Type="Self.OwnedCryptos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cryptos">
+              <PropertyRef Name="Acronym" />
+            </Principal>
+            <Dependent Role="OwnedCryptos">
+              <PropertyRef Name="CryptoAcr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cus">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OwnedCryptos" Type="Self.OwnedCryptos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OwnedCryptos">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MyBankDBModelStoreContainer">
+          <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdminLOG" EntityType="Self.AdminLOG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CashTransactions" EntityType="Self.CashTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consultant" EntityType="Self.Consultant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsultantLOG" EntityType="Self.ConsultantLOG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cryptos" EntityType="Self.Cryptos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CryptoTransactions" EntityType="Self.CryptoTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deposit" EntityType="Self.Deposit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OwnedCryptos" EntityType="Self.OwnedCryptos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Deposit_FK_CusID" Association="Self.Deposit_FK_CusID">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Deposit" EntitySet="Deposit" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdminLOG__AdminI__32B6742D" Association="Self.FK__AdminLOG__AdminI__32B6742D">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="AdminLOG" EntitySet="AdminLOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CashTrans__ConsI__2B155265" Association="Self.FK__CashTrans__ConsI__2B155265">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="CashTransactions" EntitySet="CashTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CashTrans__CusID__2A212E2C" Association="Self.FK__CashTrans__CusID__2A212E2C">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CashTransactions" EntitySet="CashTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultan__Consu__3592E0D8" Association="Self.FK__Consultan__Consu__3592E0D8">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="ConsultantLOG" EntitySet="ConsultantLOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CryptoTra__ConsI__2EE5E349" Association="Self.FK__CryptoTra__ConsI__2EE5E349">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="CryptoTransactions" EntitySet="CryptoTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CryptoTra__Crypt__2FDA0782" Association="Self.FK__CryptoTra__Crypt__2FDA0782">
+            <End Role="Cryptos" EntitySet="Cryptos" />
+            <End Role="CryptoTransactions" EntitySet="CryptoTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CryptoTra__CusID__2DF1BF10" Association="Self.FK__CryptoTra__CusID__2DF1BF10">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CryptoTransactions" EntitySet="CryptoTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__Conslt__1CC7330E" Association="Self.FK__Customer__Conslt__1CC7330E">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Crypto" Association="Self.FK_Crypto">
+            <End Role="Cryptos" EntitySet="Cryptos" />
+            <End Role="OwnedCryptos" EntitySet="OwnedCryptos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cus" Association="Self.FK_Cus">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="OwnedCryptos" EntitySet="OwnedCryptos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyBankDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MyBankDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MyBankDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MyBankDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Administrator" EntityType="MyBankDBModel.Administrator" />
+          <EntitySet Name="CashTransactions" EntityType="MyBankDBModel.CashTransactions" />
+          <EntitySet Name="Consultant" EntityType="MyBankDBModel.Consultant" />
+          <EntitySet Name="Cryptos" EntityType="MyBankDBModel.Cryptos" />
+          <EntitySet Name="CryptoTransactions" EntityType="MyBankDBModel.CryptoTransactions" />
+          <EntitySet Name="Customer" EntityType="MyBankDBModel.Customer" />
+          <EntitySet Name="Deposit" EntityType="MyBankDBModel.Deposit" />
+          <EntitySet Name="OwnedCryptos" EntityType="MyBankDBModel.OwnedCryptos" />
+          <EntitySet Name="sysdiagrams" EntityType="MyBankDBModel.sysdiagrams" />
+          <AssociationSet Name="FK__CashTrans__ConsI__04659998" Association="MyBankDBModel.FK__CashTrans__ConsI__04659998">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="CashTransactions" EntitySet="CashTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CashTrans__CusID__0371755F" Association="MyBankDBModel.FK__CashTrans__CusID__0371755F">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CashTransactions" EntitySet="CashTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CryptoTra__ConsI__08362A7C" Association="MyBankDBModel.FK__CryptoTra__ConsI__08362A7C">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="CryptoTransactions" EntitySet="CryptoTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__Conslt__76177A41" Association="MyBankDBModel.FK__Customer__Conslt__76177A41">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CryptoTra__Crypt__092A4EB5" Association="MyBankDBModel.FK__CryptoTra__Crypt__092A4EB5">
+            <End Role="Cryptos" EntitySet="Cryptos" />
+            <End Role="CryptoTransactions" EntitySet="CryptoTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Crypto" Association="MyBankDBModel.FK_Crypto">
+            <End Role="Cryptos" EntitySet="Cryptos" />
+            <End Role="OwnedCryptos" EntitySet="OwnedCryptos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CryptoTra__CusID__07420643" Association="MyBankDBModel.FK__CryptoTra__CusID__07420643">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CryptoTransactions" EntitySet="CryptoTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="Deposit_FK_CusID" Association="MyBankDBModel.Deposit_FK_CusID">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Deposit" EntitySet="Deposit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cus" Association="MyBankDBModel.FK_Cus">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="OwnedCryptos" EntitySet="OwnedCryptos" />
+          </AssociationSet>
+          <EntitySet Name="AdminLOG" EntityType="MyBankDBModel.AdminLOG" />
+          <AssociationSet Name="FK__AdminLOG__AdminI__1431ED0D" Association="MyBankDBModel.FK__AdminLOG__AdminI__1431ED0D">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="AdminLOG" EntitySet="AdminLOG" />
+          </AssociationSet>
+          <EntitySet Name="ConsultantLOG" EntityType="MyBankDBModel.ConsultantLOG" />
+          <AssociationSet Name="FK__Consultan__Consu__3592E0D8" Association="MyBankDBModel.FK__Consultan__Consu__3592E0D8">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="ConsultantLOG" EntitySet="ConsultantLOG" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FromCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Pwrd" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AdminLOG" Relationship="MyBankDBModel.FK__AdminLOG__AdminI__1431ED0D" FromRole="Administrator" ToRole="AdminLOG" />
+        </EntityType>
+        <EntityType Name="CashTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CusID" Type="Int32" />
+          <Property Name="ConsID" Type="Int32" />
+          <Property Name="Deposit_Withdraw" Type="Boolean" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Currency" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Consultant" Relationship="MyBankDBModel.FK__CashTrans__ConsI__04659998" FromRole="CashTransactions" ToRole="Consultant" />
+          <NavigationProperty Name="Customer" Relationship="MyBankDBModel.FK__CashTrans__CusID__0371755F" FromRole="CashTransactions" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Consultant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Fname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FromCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="Pwrd" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CashTransactions" Relationship="MyBankDBModel.FK__CashTrans__ConsI__04659998" FromRole="Consultant" ToRole="CashTransactions" />
+          <NavigationProperty Name="CryptoTransactions" Relationship="MyBankDBModel.FK__CryptoTra__ConsI__08362A7C" FromRole="Consultant" ToRole="CryptoTransactions" />
+          <NavigationProperty Name="Customer" Relationship="MyBankDBModel.FK__Customer__Conslt__76177A41" FromRole="Consultant" ToRole="Customer" />
+          <NavigationProperty Name="ConsultantLOG" Relationship="MyBankDBModel.FK__Consultan__Consu__3592E0D8" FromRole="Consultant" ToRole="ConsultantLOG" />
+        </EntityType>
+        <EntityType Name="Cryptos">
+          <Key>
+            <PropertyRef Name="Acronym" />
+          </Key>
+          <Property Name="Acronym" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Value_" Type="Int32" />
+          <NavigationProperty Name="CryptoTransactions" Relationship="MyBankDBModel.FK__CryptoTra__Crypt__092A4EB5" FromRole="Cryptos" ToRole="CryptoTransactions" />
+          <NavigationProperty Name="OwnedCryptos" Relationship="MyBankDBModel.FK_Crypto" FromRole="Cryptos" ToRole="OwnedCryptos" />
+        </EntityType>
+        <EntityType Name="CryptoTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CusID" Type="Int32" />
+          <Property Name="ConsID" Type="Int32" />
+          <Property Name="Buy_Sell" Type="Boolean" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="CryptoAcr" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Consultant" Relationship="MyBankDBModel.FK__CryptoTra__ConsI__08362A7C" FromRole="CryptoTransactions" ToRole="Consultant" />
+          <NavigationProperty Name="Cryptos" Relationship="MyBankDBModel.FK__CryptoTra__Crypt__092A4EB5" FromRole="CryptoTransactions" ToRole="Cryptos" />
+          <NavigationProperty Name="Customer" Relationship="MyBankDBModel.FK__CryptoTra__CusID__07420643" FromRole="CryptoTransactions" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FromCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="ConsltID" Type="Int32" />
+          <NavigationProperty Name="CashTransactions" Relationship="MyBankDBModel.FK__CashTrans__CusID__0371755F" FromRole="Customer" ToRole="CashTransactions" />
+          <NavigationProperty Name="Consultant" Relationship="MyBankDBModel.FK__Customer__Conslt__76177A41" FromRole="Customer" ToRole="Consultant" />
+          <NavigationProperty Name="CryptoTransactions" Relationship="MyBankDBModel.FK__CryptoTra__CusID__07420643" FromRole="Customer" ToRole="CryptoTransactions" />
+          <NavigationProperty Name="Deposit" Relationship="MyBankDBModel.Deposit_FK_CusID" FromRole="Customer" ToRole="Deposit" />
+          <NavigationProperty Name="OwnedCryptos" Relationship="MyBankDBModel.FK_Cus" FromRole="Customer" ToRole="OwnedCryptos" />
+        </EntityType>
+        <EntityType Name="Deposit">
+          <Key>
+            <PropertyRef Name="CusID" />
+          </Key>
+          <Property Name="CusID" Type="Int32" Nullable="false" />
+          <Property Name="Cash" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Currency" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="MyBankDBModel.Deposit_FK_CusID" FromRole="Deposit" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="OwnedCryptos">
+          <Key>
+            <PropertyRef Name="CryptoAcr" />
+            <PropertyRef Name="CusID" />
+          </Key>
+          <Property Name="CryptoAcr" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CusID" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Int32" />
+          <NavigationProperty Name="Cryptos" Relationship="MyBankDBModel.FK_Crypto" FromRole="OwnedCryptos" ToRole="Cryptos" />
+          <NavigationProperty Name="Customer" Relationship="MyBankDBModel.FK_Cus" FromRole="OwnedCryptos" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__CashTrans__ConsI__04659998">
+          <End Type="MyBankDBModel.Consultant" Role="Consultant" Multiplicity="0..1" />
+          <End Type="MyBankDBModel.CashTransactions" Role="CashTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashTransactions">
+              <PropertyRef Name="ConsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CashTrans__CusID__0371755F">
+          <End Type="MyBankDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="MyBankDBModel.CashTransactions" Role="CashTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashTransactions">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CryptoTra__ConsI__08362A7C">
+          <End Type="MyBankDBModel.Consultant" Role="Consultant" Multiplicity="0..1" />
+          <End Type="MyBankDBModel.CryptoTransactions" Role="CryptoTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CryptoTransactions">
+              <PropertyRef Name="ConsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__Conslt__76177A41">
+          <End Type="MyBankDBModel.Consultant" Role="Consultant" Multiplicity="0..1" />
+          <End Type="MyBankDBModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="ConsltID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CryptoTra__Crypt__092A4EB5">
+          <End Type="MyBankDBModel.Cryptos" Role="Cryptos" Multiplicity="0..1" />
+          <End Type="MyBankDBModel.CryptoTransactions" Role="CryptoTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cryptos">
+              <PropertyRef Name="Acronym" />
+            </Principal>
+            <Dependent Role="CryptoTransactions">
+              <PropertyRef Name="CryptoAcr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Crypto">
+          <End Type="MyBankDBModel.Cryptos" Role="Cryptos" Multiplicity="1" />
+          <End Type="MyBankDBModel.OwnedCryptos" Role="OwnedCryptos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cryptos">
+              <PropertyRef Name="Acronym" />
+            </Principal>
+            <Dependent Role="OwnedCryptos">
+              <PropertyRef Name="CryptoAcr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CryptoTra__CusID__07420643">
+          <End Type="MyBankDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="MyBankDBModel.CryptoTransactions" Role="CryptoTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CryptoTransactions">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deposit_FK_CusID">
+          <End Type="MyBankDBModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MyBankDBModel.Deposit" Role="Deposit" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Deposit">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cus">
+          <End Type="MyBankDBModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MyBankDBModel.OwnedCryptos" Role="OwnedCryptos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OwnedCryptos">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdminLOG">
+          <Key>
+            <PropertyRef Name="LOGID" />
+          </Key>
+          <Property Name="LOGID" Type="Int32" Nullable="false" />
+          <Property Name="AdminID" Type="Int32" />
+          <Property Name="Operation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Administrator" Relationship="MyBankDBModel.FK__AdminLOG__AdminI__1431ED0D" FromRole="AdminLOG" ToRole="Administrator" />
+        </EntityType>
+        <Association Name="FK__AdminLOG__AdminI__1431ED0D">
+          <End Type="MyBankDBModel.Administrator" Role="Administrator" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MyBankDBModel.AdminLOG" Role="AdminLOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AdminLOG">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ConsultantLOG">
+          <Key>
+            <PropertyRef Name="LOGID" />
+          </Key>
+          <Property Name="LOGID" Type="Int32" Nullable="false" />
+          <Property Name="ConsultantID" Type="Int32" />
+          <Property Name="Operation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Consultant" Relationship="MyBankDBModel.FK__Consultan__Consu__3592E0D8" FromRole="ConsultantLOG" ToRole="Consultant" />
+        </EntityType>
+        <Association Name="FK__Consultan__Consu__3592E0D8">
+          <End Type="MyBankDBModel.Consultant" Role="Consultant" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MyBankDBModel.ConsultantLOG" Role="ConsultantLOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ConsultantLOG">
+              <PropertyRef Name="ConsultantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyBankDBModelStoreContainer" CdmEntityContainer="MyBankDBEntities">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MyBankDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MyBankDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MyBankDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MyBankDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyBankDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MyBankDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyBankDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MyBankDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MyBankDBModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Administrator">
+            <EntityTypeMapping TypeName="MyBankDBModel.Administrator">
+              <MappingFragment StoreEntitySet="Administrator">
+                <ScalarProperty Name="Pwrd" ColumnName="Pwrd" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="FromCountry" ColumnName="FromCountry" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashTransactions">
+            <EntityTypeMapping TypeName="MyBankDBModel.CashTransactions">
+              <MappingFragment StoreEntitySet="CashTransactions">
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Deposit_Withdraw" ColumnName="Deposit_Withdraw" />
+                <ScalarProperty Name="ConsID" ColumnName="ConsID" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consultant">
+            <EntityTypeMapping TypeName="MyBankDBModel.Consultant">
+              <MappingFragment StoreEntitySet="Consultant">
+                <ScalarProperty Name="Pwrd" ColumnName="Pwrd" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FromCountry" ColumnName="FromCountry" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cryptos">
+            <EntityTypeMapping TypeName="MyBankDBModel.Cryptos">
+              <MappingFragment StoreEntitySet="Cryptos">
+                <ScalarProperty Name="Value_" ColumnName="Value_" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Acronym" ColumnName="Acronym" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CryptoTransactions">
+            <EntityTypeMapping TypeName="MyBankDBModel.CryptoTransactions">
+              <MappingFragment StoreEntitySet="CryptoTransactions">
+                <ScalarProperty Name="CryptoAcr" ColumnName="CryptoAcr" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Buy_Sell" ColumnName="Buy_Sell" />
+                <ScalarProperty Name="ConsID" ColumnName="ConsID" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="MyBankDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ConsltID" ColumnName="ConsltID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FromCountry" ColumnName="FromCountry" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deposit">
+            <EntityTypeMapping TypeName="MyBankDBModel.Deposit">
+              <MappingFragment StoreEntitySet="Deposit">
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Cash" ColumnName="Cash" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OwnedCryptos">
+            <EntityTypeMapping TypeName="MyBankDBModel.OwnedCryptos">
+              <MappingFragment StoreEntitySet="OwnedCryptos">
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+                <ScalarProperty Name="CryptoAcr" ColumnName="CryptoAcr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MyBankDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminLOG">
+            <EntityTypeMapping TypeName="MyBankDBModel.AdminLOG">
+              <MappingFragment StoreEntitySet="AdminLOG">
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="LOGID" ColumnName="LOGID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsultantLOG">
+            <EntityTypeMapping TypeName="MyBankDBModel.ConsultantLOG">
+              <MappingFragment StoreEntitySet="ConsultantLOG">
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="ConsultantID" ColumnName="ConsultantID" />
+                <ScalarProperty Name="LOGID" ColumnName="LOGID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

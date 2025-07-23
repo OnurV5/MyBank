@@ -1,0 +1,33 @@
+﻿@model MyBank.Models.Entity.Consultant
+@{
+    ViewBag.Title = "GetConsultant";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditConsultant", "Admin", FormMethod.Post))
+{
+    <div style="margin-top:15px" class="form-group">
+        @Html.HiddenFor(c => c.ID)
+        <label style="margin-top:15px">First Name</label>
+        @Html.TextBoxFor(c => c.Fname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Fname, "", new { @style = "color:red" })
+        <label style="margin-top:15px">Last Name</label>
+        @Html.TextBoxFor(c => c.LName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.LName, "", new { @style = "color:red" })
+        <label style="margin-top:15px">From</label>
+        @Html.TextBoxFor(c => c.FromCountry, new { @class = "form-control" })
+        <label style="margin-top:15px">Email</label>
+        @Html.TextBox("Email", Model.Email.Trim(), new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Email, "", new { @style = "color:red" })
+        <label style="margin-top:15px">Phone</label>
+        @Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Phone, "", new { @style = "color:red" })
+        <label style="margin-top:15px">Consultant Password</label>
+        @Html.PasswordFor(c => c.Pwrd, new { @class = "form-control" })
+
+    </div>
+    <div style="margin-top:30px">
+        <button class="btn-info" id="Btn1">Edit Consultant</button>
+    </div>
+}
+

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "SeeCashTransactionss";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using MyBank.Models.Entity
+@model List<CashTransactions>
+
+<h1>AdminIndex</h1>
+<table id="tblCT" class="table table-bordered">
+    Cash Transactions Table
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customers ID</th>
+            <th>Consultants ID</th>
+            <th>Deposit or Withdrawl</th>
+            <th>Transacted Amount</th>
+            <th>Transacted Currency</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    @foreach (var ctrans in Model)
+    {
+        <tr>
+            <td>@ctrans.ID</td>
+            <td>@ctrans.Customer.FName @ctrans.Customer.LName (@ctrans.CusID)</td>
+            <td>@ctrans.Consultant.Fname @ctrans.Consultant.LName (@ctrans.ConsID)</td>
+            @if (ctrans.Deposit_Withdraw == true)
+            {
+                <td>Withdrawl</td>
+}
+            @if (ctrans.Deposit_Withdraw == false)
+            {
+                <td>Deposit</td>
+}
+            <td>@ctrans.Amount</td>
+            <td>@ctrans.Currency</td>
+            <td><a href="/Admin/RemoveCashTransaction/@ctrans.ID" class="btn btn-danger">Remove</a></td>
+
+        </tr>
+    }
+</table>
+<a href="/Admin/AddNewCashTransaction/" class="btn btn-primary"> Add New Cash Transaction</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+
+<!-- DataTables Başlatma -->
+<script>$(document).ready(function () {
+        $('#tblCT').DataTable({
+            "searching": true, // Arama kutusunu etkinleştir
+            "paging": true,   // Sayfalama
+            "info": true      // Tablo bilgisi
+        });
+    });</script>
