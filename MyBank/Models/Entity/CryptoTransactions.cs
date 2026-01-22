@@ -15,17 +15,17 @@ namespace MyBank.Models.Entity
 
     public partial class CryptoTransactions
     {
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int ID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public Nullable<int> CusID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public Nullable<int> ConsID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public Nullable<bool> Buy_Sell { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public Nullable<int> Amount { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         [MaxLength(3, ErrorMessage = "Currency Abbrevation Cannot Be Longer Than 3 Characters")]
         [RegularExpression(@"([A-Za-z]+)", ErrorMessage = "Currency Can Only Contain Alphabetical Characters ")]
         public string CryptoAcr { get; set; }

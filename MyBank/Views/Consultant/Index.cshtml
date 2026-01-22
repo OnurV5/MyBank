@@ -1,12 +1,28 @@
-﻿
+﻿﻿
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/ConsultantLayout.cshtml";
 }
 
-<h2>Welcome to Consultant Panel</h2>
-<div style="margin-top:75px"></div>
-<a href="/Consultant/SeeCustomers/" class="btn btn-info">See Customers</a>
+<link rel="stylesheet" href="/Content/css/Consultant.css"
+<div class="consultant-container">
 
-<div style="margin-top:125px"></div>
-<a href="/Consultant/SeeCashTransactions/" class="btn btn-info">See Cash Transactions</a>
+    <div class="consultant-title">
+        Welcome to Consultant Panel
+    </div>
+
+    <div class="consultant-card-container">
+
+        <div class="consultant-card">
+            <h3>Customers</h3>
+            <a href="/Consultant/SeeCustomers/">See Customers</a>
+        </div>
+
+        <div class="consultant-card">
+            <h3>Cash Transactions</h3>
+            <a href="/Consultant/SeeCashTransactions/">See Cash Transactions</a>
+        </div>
+
+    </div>
+
+</div>

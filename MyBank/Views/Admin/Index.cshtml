@@ -1,15 +1,35 @@
-﻿
-@{
+﻿﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 @using MyBank.Models.Entity
 @model List<Customer>
 
-<h1>Welcome to Admin Panel</h1>
-<div style="margin-top:75px"></div>
-<a href="/Admin/SeeCustomers/" class="btn btn-info">See Customers</a>
-<div style="margin-top:125px"></div>
-<a href="/Admin/SeeConsultants/" class="btn btn-info">See Consultants</a>
-<div style="margin-top:125px"></div>
-<a href="/Admin/SeeCashTransactions/" class="btn btn-info">See Cash Transactions</a>
+<link rel="stylesheet" href="/Content/css/Admin.css">
+
+<div class="admin-container">
+
+    <div class="admin-title">
+        Welcome to Admin Panel
+    </div>
+
+    <div class="admin-card-container">
+
+        <div class="admin-card">
+            <h3>Customers</h3>
+            <a href="/Admin/SeeCustomers/">See Customers</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Consultants</h3>
+            <a href="/Admin/SeeConsultants/">See Consultants</a>
+        </div>
+
+        <div class="admin-card">
+            <h3>Cash Transactions</h3>
+            <a href="/Admin/SeeCashTransactions/">See Cash Transactions</a>
+        </div>
+
+    </div>
+
+</div>

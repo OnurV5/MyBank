@@ -22,7 +22,7 @@ namespace MyBank.Controllers
         [HttpPost]
         public ActionResult Login(member mem)
         {
-            System.Diagnostics.Debug.WriteLine("Login methodu çalıştı");
+            System.Diagnostics.Debug.WriteLine("Login method worked");
             var admininfo = db.Administrator.FirstOrDefault(x => x.Email == mem.email && x.Pwrd == mem.password);
             if (admininfo != null)
             {
@@ -38,7 +38,7 @@ namespace MyBank.Controllers
                 return RedirectToAction("Index", "Consultant");
             }
             // Kullanıcı bulunamadı
-            ViewBag.ErrorMessage = "Geçersiz kullanıcı adı veya şifre!";
+            ViewBag.ErrorMessage = "Invalid user name or password!";
             return View();
         }
 

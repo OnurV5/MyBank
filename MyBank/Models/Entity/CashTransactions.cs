@@ -15,19 +15,19 @@ namespace MyBank.Models.Entity
 
     public partial class CashTransactions
     {
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int ID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int CusID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int ConsID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public bool Deposit_Withdraw { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int Amount { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
-        [MaxLength(3, ErrorMessage = "Currency Abbrevation Cannot Be Longer Than 3 Characters")]
-        [RegularExpression(@"([A-Za-z]+)", ErrorMessage = "Currency Can Only Contain Alphabetical Characters ")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
+        [MaxLength(3, ErrorMessage = "Currency Abbrevation Cannot Be Longer Than 3 Characters\n\n")]
+        [RegularExpression(@"([A-Za-z]+)", ErrorMessage = "Currency Can Only Contain Alphabetical Characters\n\n")]
         public string Currency { get; set; }
     
         public virtual Consultant Consultant { get; set; }

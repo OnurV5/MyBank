@@ -24,19 +24,20 @@ namespace MyBank.Models.Entity
             this.ConsultantLOG = new HashSet<ConsultantLOG>();
         }
 
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int ID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public string Fname { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public string LName { get; set; }
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public string FromCountry { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Please Enter a Valid Email Format")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Please Enter a Valid Email Format\n\n")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public long Phone { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public string Pwrd { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

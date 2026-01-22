@@ -15,11 +15,11 @@ namespace MyBank.Models.Entity
 
     public partial class Deposit
     {
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public int CusID { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public decimal Cash { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         [MaxLength(3, ErrorMessage = "Currency Abbrevation Cannot Be Longer Than 3 Characters")]
         [RegularExpression(@"([A-Za-z]+)", ErrorMessage = "Currency Can Only Contain Alphabetical Characters ")]
         public string Currency { get; set; }

@@ -178,7 +178,7 @@ namespace MyBank.Controllers
             }
             if (!ModelState.IsValid)
             {
-                if(!ModelState.IsValidField("Pwrd") && ModelState.IsValidField("Fname") && ModelState.IsValidField("LName") && ModelState.IsValidField("Email") && ModelState.IsValidField("Phone"))
+                if(!ModelState.IsValidField("Pwrd") && ModelState.IsValidField("Fname") && ModelState.IsValidField("LName") && ModelState.IsValidField("Email") && ModelState.IsValidField("Phone") && ModelState.IsValidField("FromCountry") && ModelState.IsValidField("Pwrd"))
                 {
                     Consultant.Fname = p.Fname;
                     Consultant.LName = p.LName;

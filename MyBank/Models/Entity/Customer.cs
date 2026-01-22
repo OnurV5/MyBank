@@ -22,12 +22,13 @@ namespace MyBank.Models.Entity
             this.CryptoTransactions = new HashSet<CryptoTransactions>();
             this.OwnedCryptos = new HashSet<OwnedCryptos>();
         }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+       
         public int ID { get; set; }
         [Required(ErrorMessage = "This Line Can't Be Null")]
         public string FName { get; set; }
         [Required(ErrorMessage = "This Line Can't Be Null")]
         public string LName { get; set; }
+        [Required(ErrorMessage = "This Line Can't Be Null")]
         public string FromCountry { get; set; }
         [Required(ErrorMessage = "This Line Can't Be Null")]
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Please Enter a Valid Email Format")]

@@ -21,11 +21,11 @@ namespace MyBank.Models.Entity
             this.CryptoTransactions = new HashSet<CryptoTransactions>();
             this.OwnedCryptos = new HashSet<OwnedCryptos>();
         }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public string Acronym { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public string FullName { get; set; }
-        [Required(ErrorMessage = "This Line Can't Be Null")]
+        [Required(ErrorMessage = "This Line Can't Be Null\n\n")]
         public Nullable<int> Value_ { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
