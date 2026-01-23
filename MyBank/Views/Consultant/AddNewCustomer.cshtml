@@ -21,6 +21,7 @@
     <div style="margin-top:15px">
         <label>Customers Country</label>
         <input type="text" class="form-control" name="FromCountry" />
+        @Html.ValidationMessageFor(x => x.FromCountry, "", new { @style = "color:red" })
         <br />
     </div>
     <div style="margin-top:15px">

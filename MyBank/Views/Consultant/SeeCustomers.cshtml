@@ -37,12 +37,12 @@ Consultant Table
             <td>@cus.Phone</td>
             <td>@cus.Consultant.Fname @cus.Consultant.LName</td>
             <td>@cus.Deposit.Cash.ToString().TrimEnd('0').TrimEnd(',') @cus.Deposit.Currency</td>
-            <td><a href="/Admin/RemoveCustomer/@cus.ID" class="btn btn-danger">Remove</a></td>
-            <td><a href="/Admin/GetCustomer/@cus.ID" class="btn btn-success">Edit</a></td>
+            <td><a href="/Consultant/RemoveCustomer/@cus.ID" class="btn btn-danger">Remove</a></td>
+            <td><a href="/Consultant/GetCustomer/@cus.ID" class="btn btn-success">Edit</a></td>
         </tr>
     }
 </table>
-<a href="/Admin/AddNewCustomer/" class="btn btn-primary"> Add New Costumer</a>
+<a href="/Consultant/AddNewCustomer/" class="btn btn-primary"> Add New Costumer</a>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>

@@ -38,6 +38,11 @@ namespace MyBank
                 url: "Crypto/CryptoBoard",
                 defaults: new { controller = "Crypto", action = "CryptoBoard" }
                 );
+            routes.MapRoute(
+               name: "ExchangeRoute",
+               url: "Exchange/ExchangeBoard",
+               defaults: new { controller = "Exchange", action = "ExchangeBoard" }
+               );
 
 
 

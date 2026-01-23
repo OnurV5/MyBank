@@ -6,16 +6,15 @@ using System.Web.Mvc;
 
 namespace MyBank.Controllers
 {
-    public class CryptoController : Controller
+    public class ExchangeController : Controller
     {
-        // GET: Crypto
+        // GET: Exchange
         [Authorize]
         public ActionResult Index()
         {
-            return RedirectToRoute("CryptoRoute"); 
+            return RedirectToRoute("ExchangeRoute");
         }
-        
-        public ActionResult CryptoBoard()
+        public ActionResult ExchangeBoard()
         {
             return View();
         }

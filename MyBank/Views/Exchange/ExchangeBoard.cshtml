@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "CrytoBoard";
+
+    var userType = Session["UserType"].ToString();
+    if (userType.Equals("Admin"))
+    {
+        Layout = "/Views/Shared/AdminLayout.cshtml";
+    }
+    else if (userType.Equals("User"))
+    {
+        Layout = "/Views/Shared/ConsultantLayout.cshtml";
+    }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Live Crypto </title>
+    <!-- load in bulma style sheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <!-- insert css here -->
+    <style>
+        .table {
+            background-color: #f8e8b6;
+        }
+
+            .table thead th {
+                color: #261d1d;
+            }
+
+            .table tbody {
+                background-color: #fffaeb;
+            }
+
+        #leaderboard #cryptocurrencies tr {
+            display: table-row;
+            clear: both;
+            position: static;
+            text-align: left;
+            -moz-transition-duration: 1s;
+            -webkit-transition-duration: 1s;
+            -ms-transition-duration: 1s;
+        }
+
+        .rank {
+            width: 60px;
+        }
+
+        .name {
+            width: 200px;
+        }
+
+        .symbol {
+            width: 80px;
+        }
+
+        .price {
+            width: 100px;
+        }
+
+        .market_cap {
+            width: 150px;
+        }
+
+        .circulating_supply {
+            width: 170px;
+        }
+
+        .volume_24h {
+            width: 140px;
+        }
+
+        .percent_change_24h {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- create a table here -->
+    <table class="table is-narrow is-hoverable" id="fxboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Currency</th>
+                <th>Symbol</th>
+                <th>USD Rate</th>
+            </tr>
+        </thead>
+        <tbody id="fxrates"></tbody>
+    </table>
+
+    <form id="dataForm" method="post" action="writeToFile.php">
+        <input type="hidden" id="jsonData" name="jsonData" />
+    </form>
+    <!-- load in jquery script to use jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" type="text/javascript"></script>
+
+    <!-- main script -->
+    <script>
+
+        // fetch cryptocurrency data and store it in the variable data
+        var xhReq = new XMLHttpRequest();
+        xhReq.open("GET", "https://api.frankfurter.app/latest?from=USD", false);
+        xhReq.send(null);
+        var data;
+        data = JSON.parse(xhReq.responseText);
+        // initialization
+        var currencies = [
+            { name: "Euro", symbol: "EUR" },
+            { name: "British Pound", symbol: "GBP" },
+            { name: "Turkish Lira", symbol: "TRY" },
+            { name: "Japanese Yen", symbol: "JPY" },
+            { name: "Swiss Franc", symbol: "CHF" },
+            { name: "Canadian Dollar", symbol: "CAD" },
+            { name: "Australian Dollar", symbol: "AUD" }
+        ];
+        var fxList = [];
+        var timerId;
+        var updateInterval = 30000;
+
+
+        function ascending(a, b) { return a.percent_change_24h > b.percent_change_24h ? 1 : -1; }
+        function descending(a, b) { return a.percent_change_24h < b.percent_change_24h ? 1 : -1; }
+        function reposition() {
+            var height = $("#cryptocurrencies .cryptocurrency").height();
+            var y = height;
+            for (var i = 0; i < cryptocurrencies.length; i++) {
+                cryptocurrencies[i].$item.css("top", y + "px");
+                y += height;
+            }
+        }
+        function updateRanks(cryptocurrencies) {
+            for (var i = 0; i < cryptocurrencies.length; i++) {
+                cryptocurrencies[i].$item.find(".rank").text(i + 1);
+            }
+        }
+
+        function fetchNewData(data, attributeName, name) {
+            for (var x in data) {
+                if ((data[x].name == name) == true) {
+                    return data[x][attributeName];
+                }
+            }
+            return null;
+        }
+        function updateBoard() {
+            var cryptocurrency = getRandomCoin();
+            cryptocurrency.percent_change_24h += getRandomScoreIncrease();
+            cryptocurrency.$item.find(".percent_change_24h").text(cryptocurrency.percent_change_24h);
+            cryptocurrencies.sort(descending);
+            updateRanks(cryptocurrencies);
+            reposition();
+        }
+
+        function getNewData() {
+            // get the new data for each coin and change to their new values
+            var newReq = new XMLHttpRequest();
+            newReq.open("GET", "https://api.frankfurter.app/latest?from=USD", false);
+            newReq.send(null);
+            var newData = JSON.parse(newReq.responseText);
+
+        }
+
+        function resetFxBoard() {
+            var $list = $("#fxrates");
+            $list.empty();
+            fxList = [];
+
+            for (var i = 0; i < currencies.length; i++) {
+                var symbol = currencies[i].symbol;
+                var rate = data.rates[symbol];
+
+                fxList.push({
+                    name: currencies[i].name,
+                    symbol: symbol,
+                    rate: rate
+                });
+            }
+
+            // USD karşısında değeri yüksek olan üstte
+            fxList.sort((a, b) => b.rate - a.rate);
+
+            for (var i = 0; i < fxList.length; i++) {
+                var row = `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${fxList[i].name}</td>
+                <td>${fxList[i].symbol}</td>
+                <td>${fxList[i].rate}</td>
+            </tr>`;
+                $list.append(row);
+            }
+        }
+        function startFxUpdates() {
+            resetFxBoard();
+            timerId = setInterval(resetFxBoard, updateInterval);
+        }
+        startFxUpdates();
+        
+    </script>
+</body>
+</html>
